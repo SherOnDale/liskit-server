@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://gitlab.com/Cado-Apps/liskit-api/issues"
   },
-  "homepage": "https://gitlab.com/Cado-Apps/liskit-api#readme"
+  "homepage": "https://gitlab.com/Cado-Apps/liskit-api#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2"
+  }
 }
