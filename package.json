@@ -1,0 +1,19 @@
+{
+  "name": "liskit",
+  "version": "0.1.0",
+  "description": "A simple curated list of all your favourite links",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/Cado-Apps/liskit-api.git"
+  },
+  "author": "Sherin Binu <sherinbinu@hotmail.com> (https://sherondale.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/Cado-Apps/liskit-api/issues"
+  },
+  "homepage": "https://gitlab.com/Cado-Apps/liskit-api#readme"
+}
