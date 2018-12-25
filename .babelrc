@@ -8,5 +8,10 @@
         }
       }
     ]
-  ]
+  ],
+  "env": {
+    "debug": {
+      "retainLines": true
+    }
+  }
 }
