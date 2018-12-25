@@ -8,6 +8,7 @@
     "lint": "eslint src",
     "serve": "npm run build && node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:e2e": "cucumber-js spec/cucumber/features --require-module @babel/register --require spec/cucumber/steps",
     "watch": "nodemon -w src --exec npm run serve"
   },
   "repository": {
@@ -27,6 +28,8 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "cucumber": "^5.0.3",
     "eslint": "^5.11.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
