@@ -1,12 +1,14 @@
 import superagent from 'superagent';
 import { When, Then } from 'cucumber';
-
-let request;
-let result;
-let error;
+import assert from 'assert';
 
 When('the client creates a POST request to /users', function () {
-  request = superagent('POST', 'localhost:8080/users');
+  this.request = superagent(
+    'POST',
+    `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOSTNAME}:${
+      process.env.SERVER_PORT
+    }/liskit/user`,
+  );
 });
 
 When('attaches a generic empty payload', function () {
@@ -14,27 +16,39 @@ When('attaches a generic empty payload', function () {
 });
 
 When('sends the request', function (callback) {
-  request
+  this.request
     .then((response) => {
-      result = response.res;
+      this.response = response.res;
       callback();
     })
     .catch((errResponse) => {
-      error = errResponse.response;
+      this.response = errResponse.response;
       callback();
     });
 });
 
 Then('our API should respond with a 400 HTTP status code', function () {
-  if (error.statusCode !== 400) {
-    throw new Error();
+  assert.equal(this.response.statusCode, 400);
+});
+
+Then('the content type of the response should be JSON', function () {
+  let contentType = this.response.headers['Content-Type'] || this.response.headers['content-type'];
+  contentType = contentType.substring(
+    contentType.indexOf('application/json'),
+    'application/json'.length,
+  );
+  assert.equal(contentType, 'application/json');
+});
+
+Then('the payload of the response should be a JSON object', function () {
+  try {
+    this.responsePayload = JSON.parse(this.response.text);
+  } catch (e) {
+    throw new Error('Response not a valid JSON object');
   }
 });
 
-Then('the payload of the response should be a JSON object', function (callback) {
-  callback(null, 'pending');
-});
-
-Then('contains a message property which says "Payload should not be empty"', function (callback) {
-  callback(null, 'pending');
+Then('contains a message property which says "Payload should not be empty"', function () {
+  console.log(this.responsePayload);
+  assert.equal(this.responsePayload.message, 'Payload should not be empty');
 });

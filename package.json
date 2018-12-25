@@ -6,9 +6,9 @@
   "scripts": {
     "build": "rm -rf dist/ && babel src -d dist",
     "lint": "eslint src",
-    "serve": "npm run build && node dist/server.js",
+    "serve": "npm run build && dotenv node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:e2e": "cucumber-js spec/cucumber/features --require-module @babel/register --require spec/cucumber/steps",
+    "test:e2e": "dotenv cucumber-js -- spec/cucumber/features --require-module @babel/register --require spec/cucumber/steps",
     "watch": "nodemon -w src --exec npm run serve"
   },
   "repository": {
@@ -22,7 +22,8 @@
   },
   "homepage": "https://gitlab.com/Cado-Apps/liskit-api#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.2.5"
+    "@babel/polyfill": "^7.2.5",
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -31,6 +32,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/register": "^7.0.0",
     "cucumber": "^5.0.3",
+    "dotenv-cli": "^1.4.0",
     "eslint": "^5.11.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",

@@ -1,10 +1,14 @@
+import express from 'express';
 import '@babel/polyfill';
-import http from 'http';
+import userRoutes from './routes/user.route';
 
-function requestHandler(req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello, world!');
-}
+const app = express();
 
-const server = http.createServer(requestHandler);
-server.listen(8080);
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use('/liskit/user/', userRoutes);
+
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(`Server listening on port ${process.env.SERVER_PORT}`);
+});
