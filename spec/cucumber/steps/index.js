@@ -79,6 +79,25 @@ When(
   },
 );
 
+When(
+  /^attaches an? (.+) payload where the ([a-zA-Z0-9, ]+) fields? (?:is|are) exactly (.+)$/,
+  function (payloadType, fields, value) {
+    const payload = {};
+    if (payloadType === 'Create User') {
+      payload.email = 'e@mai.il';
+      payload.password = 'password';
+    }
+    const fieldsToModify = fields
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s !== '');
+    fieldsToModify.forEach((field) => {
+      payload[field] = value;
+    });
+    this.request.send(JSON.stringify(payload)).set('Content-Type', 'application/json');
+  },
+);
+
 When(/^sends the request$/, function (callback) {
   this.request
     .then((response) => {

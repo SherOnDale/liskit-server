@@ -54,3 +54,21 @@ Feature: Create User
       | field    | type   |
       | email    | string |
       | password | string |
+
+  Scenario Outline: Request Payload with invalid email format
+
+    If the client sends a POST request to /liskit/users with invalid email, they should receive a response with a 400 status code
+
+    When the client creates a POST request to /liskit/users
+    And attaches a Create User payload where the email field is exactly <email>
+    And sends the request
+    Then our API should respond with a 400 HTTP status code
+    And the payload of the response should be a JSON object
+    And contains a message property which says "The email field must be a valid email"
+
+    Examples:
+
+      | email     |
+      | a232hij2  |
+      | a@1.2.3.4 |
+      | a.b.c@!!  |
