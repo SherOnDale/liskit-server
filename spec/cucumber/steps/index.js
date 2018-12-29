@@ -2,20 +2,40 @@ import superagent from 'superagent';
 import { When, Then } from 'cucumber';
 import assert from 'assert';
 
-When('the client creates a POST request to /users', function () {
-  this.request = superagent(
-    'POST',
-    `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOSTNAME}:${
-      process.env.SERVER_PORT
-    }/liskit/user`,
-  );
+When(
+  /^the client creates a (GET|POST|PATCH|PUT|DELETE|OPTIONS|HEAD) request to ([/\w-:.]+)$/,
+  function (method, path) {
+    this.request = superagent(
+      method,
+      `${process.env.SERVER_PROTOCOL}://${process.env.SERVER_HOSTNAME}:${
+        process.env.SERVER_PORT
+      }${path}`,
+    );
+  },
+);
+
+When(/^attaches a generic (.+) payload$/, function (payloadType) {
+  switch (payloadType) {
+    case 'malformed':
+      this.request
+        .set('Content-Type', 'application/json')
+        .send('{"email": "sherinbinu@hotmail.com", name:}');
+      break;
+    case 'non-JSON':
+      this.request
+        .send('<?xml version="1.0" encoding="UTF-8" ?><email>sherinbinu@hotmail.com</email> ')
+        .set('Content-Type', 'text/xml');
+      break;
+    case 'empty':
+    default:
+  }
 });
 
-When('attaches a generic empty payload', function () {
-  return undefined;
+When(/^without a (?:"|')([\w-]+)(?:"|') header set$/, function (headerName) {
+  this.request.unset(headerName);
 });
 
-When('sends the request', function (callback) {
+When(/^sends the request$/, function (callback) {
   this.request
     .then((response) => {
       this.response = response.res;
@@ -27,11 +47,11 @@ When('sends the request', function (callback) {
     });
 });
 
-Then('our API should respond with a 400 HTTP status code', function () {
-  assert.equal(this.response.statusCode, 400);
+Then(/^our API should respond with a ([1-5]\d{2}) HTTP status code$/, function (statusCode) {
+  assert.equal(this.response.statusCode, statusCode);
 });
 
-Then('the content type of the response should be JSON', function () {
+Then(/^the content type of the response should be JSON$/, function () {
   let contentType = this.response.headers['Content-Type'] || this.response.headers['content-type'];
   contentType = contentType.substring(
     contentType.indexOf('application/json'),
@@ -40,7 +60,7 @@ Then('the content type of the response should be JSON', function () {
   assert.equal(contentType, 'application/json');
 });
 
-Then('the payload of the response should be a JSON object', function () {
+Then(/^the payload of the response should be a JSON object$/, function () {
   try {
     this.responsePayload = JSON.parse(this.response.text);
   } catch (e) {
@@ -48,7 +68,10 @@ Then('the payload of the response should be a JSON object', function () {
   }
 });
 
-Then('contains a message property which says "Payload should not be empty"', function () {
-  console.log(this.responsePayload);
-  assert.equal(this.responsePayload.message, 'Payload should not be empty');
+Then(/^contains an error property set to (true|false)$/, function (error) {
+  assert.equal(this.responsePayload.error.toString(), error);
+});
+
+Then(/^contains a message property which says (?:"|')(.*)(?:"|')$/, function (message) {
+  assert.equal(this.responsePayload.message, message);
 });
