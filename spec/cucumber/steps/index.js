@@ -52,6 +52,33 @@ When(/^attaches an? (.+) payload which is missing the ([a-zA-Z0-9, ]+) fields?$/
   this.request.send(JSON.stringify(payload)).set('Content-Type', 'application/json');
 });
 
+When(
+  /^attaches an? (.+) payload where the ([a-zA-Z0-9, ]+) fields? (?:is|are)(\s+not)? a ([a-zA-Z]+)$/,
+  function (payloadType, fields, invert, type) {
+    const payload = {};
+    if (payloadType === 'Create User') {
+      payload.email = 'e@ma.il';
+      payload.password = 'password';
+    }
+    const typeKey = type.toLowerCase();
+    const invertKey = invert ? 'not' : 'is';
+    const sampleValues = {
+      string: {
+        is: 'string',
+        not: 10,
+      },
+    };
+    const fieldsToModify = fields
+      .split(',')
+      .map(s => s.trim())
+      .filter(s => s !== '');
+    fieldsToModify.forEach((field) => {
+      payload[field] = sampleValues[typeKey][invertKey];
+    });
+    this.request.send(JSON.stringify(payload)).set('Content-Type', 'application/json');
+  },
+);
+
 When(/^sends the request$/, function (callback) {
   this.request
     .then((response) => {

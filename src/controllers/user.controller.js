@@ -6,6 +6,11 @@ const create = (req, res) => {
     });
   }
   if (req.body.email && req.body.password) {
+    if (typeof req.body.email !== 'string' || typeof req.body.password !== 'string') {
+      return res.status(400).json({
+        message: 'The email and password fields must be of type string',
+      });
+    }
     return res.status(200).json({
       error: false,
       message: 'Successfully created a new user',

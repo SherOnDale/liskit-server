@@ -4,7 +4,7 @@ Feature: Create User
 
   Scenario Outline: Bad Client Requests
 
-    If the client sends a POST request to /liskit/users with a bad payload, they should receive a reponse with a 4xx status code.
+    If the client sends a POST request to /liskit/users with a bad payload, they should receive a reponse with a 400 status code.
 
     When the client creates a POST request to /liskit/users
     And attaches a generic <payloadType> payload
@@ -24,6 +24,8 @@ Feature: Create User
 
   Scenario Outline: Bad Request Payload
 
+    If the client sends a POST request to /liskit/users with missing fields, they should receive a response with a 400 status code.
+
     When the client creates a POST request to /liskit/users
     And attaches a Create User payload which is missing the <missingFields> field
     And sends the request
@@ -36,3 +38,19 @@ Feature: Create User
       | missingFields |
       | email         |
       | password      |
+
+  Scenario Outline: Request Payload with Properties of Unsupported Type
+
+    If the client sends a POST request to /liskit/users with invalid types, they should receive a response with a 400 status code.
+
+    When the client creates a POST request to /liskit/users
+    And attaches a Create User payload where the <field> field is not a <type>
+    And sends the request
+    Then our API should respond with a 400 HTTP status code
+    And the payload of the response should be a JSON object
+    And contains a message property which says "The email and password fields must be of type string"
+
+    Examples:
+      | field    | type   |
+      | email    | string |
+      | password | string |
