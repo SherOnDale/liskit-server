@@ -1,6 +1,5 @@
 Feature: General
 
-  @test
   Scenario Outline: POST, PUT and PATCH requests should have non-empty payloads
 
     All POST, PUT and PATCH requests must have non-zero values for its "Content-Length" header

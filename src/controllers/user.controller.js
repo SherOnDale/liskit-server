@@ -5,9 +5,15 @@ const create = (req, res) => {
       message: 'Payload should not be empty',
     });
   }
-  return res.status(200).json({
-    error: false,
-    message: 'Successfully created a new user',
+  if (req.body.email && req.body.password) {
+    return res.status(200).json({
+      error: false,
+      message: 'Successfully created a new user',
+    });
+  }
+  return res.status(400).json({
+    error: true,
+    message: 'Payload must contain at least the email and password fields',
   });
 };
 

@@ -35,6 +35,23 @@ When(/^without a (?:"|')([\w-]+)(?:"|') header set$/, function (headerName) {
   this.request.unset(headerName);
 });
 
+When(/^attaches an? (.+) payload which is missing the ([a-zA-Z0-9, ]+) fields?$/, function (
+  payloadType,
+  missingFields,
+) {
+  const payload = {};
+  if (payloadType === 'Create User') {
+    payload.email = 'e@ma.il';
+    payload.password = 'password';
+  }
+  const fieldsToDelete = missingFields
+    .split(',')
+    .map(s => s.trim())
+    .filter(s => s !== '');
+  fieldsToDelete.forEach(field => delete payload[field]);
+  this.request.send(JSON.stringify(payload)).set('Content-Type', 'application/json');
+});
+
 When(/^sends the request$/, function (callback) {
   this.request
     .then((response) => {
