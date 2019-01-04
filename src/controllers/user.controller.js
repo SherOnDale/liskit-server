@@ -1,34 +1,22 @@
+import ValidationError from '../validators/errors/validation-error';
+import validate from '../validators/users/create';
 import User from '../models/user.model';
 
 const create = (req, res) => {
-  if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+  const validationResults = validate(req);
+  if (validationResults instanceof ValidationError) {
     return res.status(400).json({
       error: true,
-      message: 'Payload should not be empty',
+      message: validationResults.message,
     });
-  }
-  if (!req.body.email || !req.body.password || !req.body.username) {
-    return res.status(400).json({
-      error: true,
-      message: 'Payload must contain at least the email and password fields',
-    });
-  }
-  if (
-    typeof req.body.email !== 'string'
-    || typeof req.body.password !== 'string'
-    || typeof req.body.username !== 'string'
-  ) {
-    return res.status(400).json({
-      error: true,
-      message: 'The email, password and username fields must be of type string',
-    });
-  }
-  if (!/^[\w.+]+@\w+\.\w+$/.test(req.body.email)) {
-    return res.status(400).json({ error: true, message: 'The email field must be a valid email' });
   }
 
-  // const { email, password, username } = req.body;
-  const user = new User(req.body);
+  const { email, password, username } = req.body;
+  const user = new User({
+    email,
+    password,
+    username,
+  });
   user.save((error, newUser) => {
     if (error) {
       console.log(req.body);

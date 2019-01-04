@@ -33,7 +33,7 @@ Feature: Create User
     And the content type of the response should be JSON
     And the payload of the response should be a JSON object
     And contains an error property set to true
-    And contains a message property which says "Payload must contain at least the email and password fields"
+    And contains a message property which says "Payload must contain at least the email, username and password fields"
 
     Examples:
 
@@ -53,7 +53,7 @@ Feature: Create User
     And the content type of the response should be JSON
     And the payload of the response should be a JSON object
     And contains an error property set to true
-    And contains a message property which says "The email, password and username fields must be of type string"
+    And contains a message property which says "The email, username and password fields must be of type string"
 
     Examples:
       | field    | type   |
