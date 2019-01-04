@@ -3,6 +3,7 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 import '@babel/polyfill';
 import userRoutes from './routes/user.route';
+import liskRoutes from './routes/lisk.route';
 import middlewares from './middlewares';
 
 const app = express();
@@ -25,5 +26,6 @@ app.use(middlewares.contentTypejson);
 app.use(middlewares.handleErrors);
 
 app.use('/liskit/users/', userRoutes);
+app.use('/liskit/lisks/', liskRoutes);
 
 app.listen(process.env.SERVER_PORT);
