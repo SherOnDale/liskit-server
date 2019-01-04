@@ -1,7 +1,15 @@
 import superagent from 'superagent';
 import { When, Then } from 'cucumber';
 import assert from 'assert';
+import mongoose from 'mongoose';
+import User from '../../../dist/models/user.model';
 import { getValidPayload, convertStringToArray } from './utils';
+
+mongoose.set('useCreateIndex', true);
+mongoose.connect(
+  `${process.env.MONGO_PROTOCOL}://${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DB}`,
+  { useNewUrlParser: true },
+);
 
 When(
   /^the client creates a (GET|POST|PATCH|PUT|DELETE|OPTIONS|HEAD) request to ([/\w-:.]+)$/,
@@ -78,6 +86,11 @@ When(
   },
 );
 
+When(/^attaches a valid (.+) payload$/, function (payloadType) {
+  this.requestPayload = getValidPayload(payloadType);
+  this.request.set('Content-Type', 'application/json').send(JSON.stringify(this.requestPayload));
+});
+
 When(/^sends the request$/, function (callback) {
   this.request
     .then((response) => {
@@ -117,4 +130,37 @@ Then(/^contains an error property set to (true|false)$/, function (error) {
 
 Then(/^contains a message property which says (?:"|')(.*)(?:"|')$/, function (message) {
   assert.equal(this.responsePayload.message, message);
+});
+
+Then(/^contains a payload property of type object$/, function () {
+  assert.equal(typeof this.responsePayload.payload, 'object');
+});
+
+Then(/^the payload contains a property ([a-zA-Z]+) of type ([a-z]+)$/, function (
+  propertyName,
+  type,
+) {
+  assert.equal(typeof this.responsePayload.payload[propertyName], type);
+});
+
+Then(
+  /^the payload object should be added to the database, grouped under the "([a-zA-Z]+)" type$/,
+  function (type, callback) {
+    this.type = type;
+    if (type === 'user') {
+      User.findById(this.responsePayload.payload.userId, (error, user) => {
+        if (error) callback(error);
+        assert.equal(user.email, this.requestPayload.email);
+        callback();
+      });
+    }
+  },
+);
+
+Then(/^the newly-created user should be deleted$/, function (callback) {
+  User.deleteOne({ _id: this.responsePayload.payload.userId })
+    .then(() => {
+      callback();
+    })
+    .catch(callback);
 });

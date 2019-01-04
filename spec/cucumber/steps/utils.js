@@ -4,6 +4,7 @@ function getValidPayload(type) {
       return {
         email: 'e@ma.il',
         password: 'password',
+        username: 'username',
       };
     default:
       return undefined;
