@@ -7,10 +7,8 @@
     "build": "rm -rf dist/ && babel src -d dist",
     "lint": "eslint src",
     "serve": "npm run build && dotenv -e envs/.env node dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:e2e": "dotenv -e envs/test.env -e envs/.env cucumber-js -- spec/cucumber/features --require-module @babel/register --require spec/cucumber/steps",
-    "watch": "nodemon -w src --exec npm run serve",
-    "watch:test": "dotenv -e envs/test.env npm run watch"
+    "test:e2e": "dotenv -e envs/test.env -e envs/.env ./scripts/e2e.test.sh",
+    "watch": "nodemon -w src --exec npm run serve"
   },
   "repository": {
     "type": "git",
