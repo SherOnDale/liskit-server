@@ -8,7 +8,6 @@ const list = (req, res) => {
         message: 'Error retreiving lisk list. Please try again later',
       });
     }
-    console.log(lisks);
     return res.status(200).json({
       error: false,
       message: 'Successfullly retrieved the lisk list',

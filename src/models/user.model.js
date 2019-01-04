@@ -27,6 +27,16 @@ const UserSchema = new Schema({
       ref: 'Lisk',
     },
   ],
+  profile: {
+    name: {
+      first: String,
+      last: String,
+    },
+    bio: String,
+    social: {
+      github: String,
+    },
+  },
   salt: {
     type: String,
     required: true,

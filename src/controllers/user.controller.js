@@ -19,8 +19,6 @@ const create = (req, res) => {
   });
   user.save((error, newUser) => {
     if (error) {
-      console.log(req.body);
-      console.log(error);
       return res.status(500).json({
         error: true,
         message: 'Error signing up. Please try again later',

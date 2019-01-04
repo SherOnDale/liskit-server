@@ -86,6 +86,11 @@ When(
   },
 );
 
+When(/^attaches (.+) as the payload$/, function (payload) {
+  this.requestPayload = JSON.parse(payload);
+  this.request.send(payload).set('Content-Type', 'application/json');
+});
+
 When(/^attaches a valid (.+) payload$/, function (payloadType) {
   this.requestPayload = getValidPayload(payloadType);
   this.request.set('Content-Type', 'application/json').send(JSON.stringify(this.requestPayload));
