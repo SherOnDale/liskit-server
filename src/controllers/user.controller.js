@@ -48,4 +48,22 @@ const create = (req, res) => {
   });
 };
 
-export default { create };
+const list = (req, res) => {
+  User.find({}, (error, users) => {
+    if (error) {
+      return res.status(500).json({
+        error: true,
+        message: 'Error retreiving user list. Please try again later',
+      });
+    }
+    return res.status(200).json({
+      error: false,
+      message: 'Successfullly retrieved the user list',
+      payload: {
+        users,
+      },
+    });
+  });
+};
+
+export default { create, list };
