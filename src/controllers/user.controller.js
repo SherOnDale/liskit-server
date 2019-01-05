@@ -7,6 +7,7 @@ const create = (req, res) => {
   if (validationResults instanceof ValidationError) {
     return res.status(400).json({
       error: true,
+      code: '111',
       message: validationResults.message,
     });
   }
@@ -21,11 +22,13 @@ const create = (req, res) => {
     if (error) {
       return res.status(500).json({
         error: true,
+        code: '999',
         message: 'Error signing up. Please try again later',
       });
     }
     return res.status(201).json({
       error: false,
+      code: '011',
       message: 'Successfully created a new user',
       payload: {
         userId: newUser._id,
@@ -39,13 +42,13 @@ const list = (req, res) => {
     if (error) {
       return res.status(500).json({
         error: true,
-        code: '101',
+        code: '110',
         message: 'Error retreiving user list. Please try again later',
       });
     }
     return res.status(200).json({
       error: false,
-      code: '001',
+      code: '010',
       message: 'Successfullly retrieved the user list',
       payload: {
         users,
