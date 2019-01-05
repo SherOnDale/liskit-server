@@ -38,6 +38,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "husky": "^1.2.1",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "superagent": "^4.0.0"
   }

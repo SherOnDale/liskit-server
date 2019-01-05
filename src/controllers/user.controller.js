@@ -1,9 +1,9 @@
-import ValidationError from '../validators/errors/validation-error';
-import validate from '../validators/users/create';
+import ValidationError from '../validators/ValidationError';
+import validate from '../validators/user.validation';
 import User from '../models/user.model';
 
 const create = (req, res) => {
-  const validationResults = validate(req);
+  const validationResults = validate.createvalidation(req);
   if (validationResults instanceof ValidationError) {
     return res.status(400).json({
       error: true,
@@ -39,11 +39,13 @@ const list = (req, res) => {
     if (error) {
       return res.status(500).json({
         error: true,
+        code: '101',
         message: 'Error retreiving user list. Please try again later',
       });
     }
     return res.status(200).json({
       error: false,
+      code: '001',
       message: 'Successfullly retrieved the user list',
       payload: {
         users,

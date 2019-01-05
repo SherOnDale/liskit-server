@@ -1,6 +1,6 @@
-import ValidationError from '../errors/validation-error';
+import ValidationError from './ValidationError';
 
-function validate(req) {
+function createvalidation(req) {
   if (!req.body.email || !req.body.password || !req.body.username) {
     return new ValidationError(
       'Payload must contain at least the email, username and password fields',
@@ -20,4 +20,4 @@ function validate(req) {
   }
 }
 
-export default validate;
+export default { createvalidation };

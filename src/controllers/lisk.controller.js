@@ -5,11 +5,13 @@ const list = (req, res) => {
     if (error) {
       return res.status(500).json({
         error: true,
+        code: '100',
         message: 'Error retreiving lisk list. Please try again later',
       });
     }
     return res.status(200).json({
       error: false,
+      code: '000',
       message: 'Successfullly retrieved the lisk list',
       payload: {
         lisks,
