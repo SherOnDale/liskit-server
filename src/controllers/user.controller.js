@@ -38,23 +38,27 @@ const create = (req, res) => {
 };
 
 const list = (req, res) => {
-  User.find({}, (error, users) => {
-    if (error) {
-      return res.status(500).json({
-        error: true,
-        code: '110',
-        message: 'Error retreiving user list. Please try again later',
+  User.find({})
+    .sort({ updated: -1 })
+    .skip(0)
+    .limit(10)
+    .exec((error, users) => {
+      if (error) {
+        return res.status(500).json({
+          error: true,
+          code: '110',
+          message: 'Error retreiving user list. Please try again later',
+        });
+      }
+      return res.status(200).json({
+        error: false,
+        code: '010',
+        message: 'Successfullly retrieved the user list',
+        payload: {
+          users,
+        },
       });
-    }
-    return res.status(200).json({
-      error: false,
-      code: '010',
-      message: 'Successfullly retrieved the user list',
-      payload: {
-        users,
-      },
     });
-  });
 };
 
 export default { create, list };

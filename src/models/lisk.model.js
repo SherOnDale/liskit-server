@@ -56,7 +56,10 @@ const LiskSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  updated: Date,
+  updated: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export default mongoose.model('Lisk', LiskSchema);

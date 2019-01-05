@@ -45,7 +45,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  updated: Date,
+  updated: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 UserSchema.virtual('password')
