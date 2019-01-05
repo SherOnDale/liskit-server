@@ -9,6 +9,7 @@ export default (req, res, next) => {
       .set('Content-Type', 'application/json')
       .json({
         error: true,
+        code: '920',
         message: 'The "Content-Type" header must be set for requests with a non-empty payload',
       });
   }
