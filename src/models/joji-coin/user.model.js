@@ -17,7 +17,6 @@ const JojiUserSchema = new Schema({
   hashedEmail: {
     type: String,
     required: 'Email Address is required.',
-    unique: 'Email Address is already in use.',
   },
   ethAddress: {
     type: String,

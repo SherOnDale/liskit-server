@@ -2,7 +2,7 @@ POST https://api.sherondale.me/joji/users
 content-type: application/json
 
 {
-    "username": "sherin",
+    "username": "sherin4",
     "email": "test@test.com",
     "password": "test",
     "entropy": "sfjdsifjdsoifsdhofidshfodshfodsifhsdofihsdofidsbfiosdbfoidsbfodsifbdsoifhdsofjdsiofsjdifodsfnsodifbdsofbdsiofbdsiofb"
