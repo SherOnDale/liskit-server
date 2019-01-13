@@ -8,6 +8,7 @@
     "lint": "eslint src",
     "start": "node dist/server.js",
     "serve": "npm run build && dotenv -e envs/.env pm2 start dist/server.js",
+    "test": "npm run test:e2e",
     "test:e2e": "dotenv -e envs/test.env -e envs/.env ./scripts/e2e.test.sh",
     "watch": "nodemon -w src --exec npm run serve"
   },
