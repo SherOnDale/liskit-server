@@ -171,5 +171,5 @@ Then(/^the newly-created user should be deleted$/, function (callback) {
 });
 
 AfterAll(function (callback) {
-  mongoose.disconnect().then(() => callback());
+  mongoose.connection.close().then(() => callback());
 });

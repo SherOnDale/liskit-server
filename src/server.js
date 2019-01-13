@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import '@babel/polyfill';
 import userRoutes from './routes/user.route';
 import liskRoutes from './routes/lisk.route';
+import jojiCoinUserRoutes from './routes/joji-coin/user.route';
 import middlewares from './middlewares';
 
 const app = express();
@@ -27,5 +28,6 @@ app.use(middlewares.handleErrors);
 
 app.use('/liskit/users/', userRoutes);
 app.use('/liskit/lisks/', liskRoutes);
+app.use('/joji/users', jojiCoinUserRoutes);
 
 app.listen(process.env.SERVER_PORT);
