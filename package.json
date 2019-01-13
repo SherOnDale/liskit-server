@@ -1,7 +1,7 @@
 {
-  "name": "liskit",
+  "name": "sherondale-api",
   "version": "0.1.0",
-  "description": "A simple curated list of all your favourite links",
+  "description": "API endpoints for all my apps",
   "main": "server.js",
   "scripts": {
     "build": "rm -rf dist/ && babel src -d dist",
