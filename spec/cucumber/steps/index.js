@@ -170,6 +170,6 @@ Then(/^the newly-created user should be deleted$/, function (callback) {
     .catch(callback);
 });
 
-AfterAll(function () {
-  mongoose.disconnect().then(() => Promise.resolve());
+AfterAll(function (callback) {
+  mongoose.disconnect().then(() => callback());
 });
