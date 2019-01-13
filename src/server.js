@@ -28,6 +28,6 @@ app.use(middlewares.handleErrors);
 
 app.use('/liskit/users/', userRoutes);
 app.use('/liskit/lisks/', liskRoutes);
-app.use('/joji/users', jojiCoinUserRoutes);
+app.use('/joji/users/', jojiCoinUserRoutes);
 
 app.listen(process.env.SERVER_PORT);

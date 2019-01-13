@@ -1,7 +1,9 @@
-import web3 from 'web3';
+import Web3 from 'web3';
 import ValidationError from '../../validators/ValidationError';
 import validate from '../../validators/joji-coin/user.validation';
 import JojiUser from '../../models/joji-coin/user.model';
+
+const web3 = new Web3('https://rinkeby.infura.io/v3/82314c9668f843699f03f63e902437ee');
 
 const create = (req, res) => {
   const validationResults = validate.createvalidation(req);
