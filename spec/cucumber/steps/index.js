@@ -1,5 +1,5 @@
 import superagent from 'superagent';
-import { When, Then } from 'cucumber';
+import { When, Then, AfterAll } from 'cucumber';
 import assert from 'assert';
 import mongoose from 'mongoose';
 import User from '../../../dist/models/user.model';
@@ -168,4 +168,9 @@ Then(/^the newly-created user should be deleted$/, function (callback) {
       callback();
     })
     .catch(callback);
+});
+
+AfterAll(function () {
+  console.log('finished');
+  mongoose.disconnect().then(() => Promise.resolve());
 });
