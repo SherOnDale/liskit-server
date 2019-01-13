@@ -16,9 +16,8 @@ const JojiUserSchema = new Schema({
   },
   hashedEmail: {
     type: String,
-    trim: true,
     required: 'Email Address is required.',
-    unique: 'Email Address already exists.',
+    unique: 'Email Address is already in use.',
   },
   ethAddress: {
     type: String,
@@ -56,7 +55,7 @@ JojiUserSchema.virtual('email')
   .set(function (email) {
     this._email = email;
     this.emailSalt = this.makeSalt();
-    this.hashedEmail = this.encryptPassword(email);
+    this.hashedEmail = this.encryptEmail(email);
   })
   .get(function () {
     return this._email;
@@ -77,19 +76,20 @@ JojiUserSchema.methods = {
       return '';
     }
   },
+  encryptEmail(email) {
+    if (!email) return '';
+    try {
+      return crypto
+        .createHmac('sha1', this.emailSalt)
+        .update(email)
+        .digest('hex');
+    } catch (err) {
+      return '';
+    }
+  },
   makeSalt() {
     return `${Math.round(new Date().valueOf() * Math.random())}`;
   },
 };
-
-JojiUserSchema.path('hash').validate(function () {
-  if (this._password && this._password.length < 6) {
-    this.invalidate('password', 'Password must be atleast 6 characters.');
-  }
-
-  if (this.isNew && !this._password) {
-    this.invalidate('password', 'Password is required.');
-  }
-});
 
 export default mongoose.model('JojiUser', JojiUserSchema);

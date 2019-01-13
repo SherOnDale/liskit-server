@@ -1,0 +1,20 @@
+POST https://api.sherondale.me/joji/users
+content-type: application/json
+
+{
+    "username": "sherin",
+    "email": "test@test.com",
+    "password": "test",
+    "entropy": "sfjdsifjdsoifsdhofidshfodshfodsifhsdofihsdofidsbfiosdbfoidsbfodsifbdsoifhdsofjdsiofsjdifodsfnsodifbdsofbdsiofbdsiofb"
+}
+###
+
+POST http://localhost:8080/joji/users
+content-type: application/json
+
+{
+    "username": "sherin2",
+    "email": "test@test.com",
+    "password": "test",
+    "entropy": "sfjdsifjdsoifsdhofidshfodshfodsifhsdofihsdofidsbfiosdbfoidsbfodsifbdsoifhdsofjdsiofsjdifodsfnsodifbdsofbdsiofbdsiofb"
+}
