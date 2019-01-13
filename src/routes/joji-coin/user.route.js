@@ -3,6 +3,9 @@ import userCtrl from '../../controllers/joji-coin/user.controller';
 
 const router = express.Router();
 
-router.route('/').post(userCtrl.create);
+router
+  .route('/')
+  .get(userCtrl.list)
+  .post(userCtrl.create);
 
 export default router;
