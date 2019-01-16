@@ -18,3 +18,13 @@ content-type: application/json
     "password": "test",
     "entropy": "sfjdsifjdsoifsdhofidshfodshfodsifhsdofihsdofidsbfiosdbfoidsbfodsifbdsoifhdsofjdsiofsjdifodsfnsodifbdsofbdsiofbdsiofb"
 }
+
+###
+
+POST http://localhost:8080/joji/auth
+Content-Type: application/json
+
+{
+    "username": "sherin2",
+    "password": "test"
+}
