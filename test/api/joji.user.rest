@@ -28,3 +28,14 @@ Content-Type: application/json
     "username": "sherin2",
     "password": "test"
 }
+
+###
+
+
+POST https://api.sherondale.me/joji/auth
+Content-Type: application/json
+
+{
+    "username": "sherin2",
+    "password": "test"
+}

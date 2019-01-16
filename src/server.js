@@ -26,6 +26,7 @@ app.use(middlewares.handleEmptyPayload);
 app.use(middlewares.contentTypeSet);
 app.use(middlewares.contentTypejson);
 app.use(middlewares.handleErrors);
+app.use(middlewares.setResponseHeaders);
 
 app.use('/liskit/users/', userRoutes);
 app.use('/liskit/lisks/', liskRoutes);
