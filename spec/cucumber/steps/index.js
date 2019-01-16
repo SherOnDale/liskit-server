@@ -1,15 +1,23 @@
 import superagent from 'superagent';
-import { When, Then, AfterAll } from 'cucumber';
+import {
+  When, Then, AfterAll, BeforeAll,
+} from 'cucumber';
 import assert from 'assert';
 import mongoose from 'mongoose';
 import User from '../../../dist/models/user.model';
 import { getValidPayload, convertStringToArray } from './utils';
 
-mongoose.set('useCreateIndex', true);
-mongoose.connect(
-  `${process.env.MONGO_PROTOCOL}://${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DB}`,
-  { useNewUrlParser: true },
-);
+BeforeAll(function (callback) {
+  mongoose.set('useCreateIndex', true);
+  mongoose
+    .connect(
+      `${process.env.MONGO_PROTOCOL}://${process.env.MONGO_HOSTNAME}/${process.env.MONGO_DB}`,
+      { useNewUrlParser: true },
+    )
+    .then(() => {
+      callback();
+    });
+});
 
 When(
   /^the client creates a (GET|POST|PATCH|PUT|DELETE|OPTIONS|HEAD) request to ([/\w-:.]+)$/,
