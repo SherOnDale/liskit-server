@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rm -rf dist/ && babel src -d dist",
     "lint": "eslint src",
+    "restart": "pm2 delete server && npm run serve",
     "start": "npm run build && dotenv -e envs/.env.local node .",
     "serve": "npm run build && dotenv -e envs/.env pm2 start dist/server.js",
     "test": "npm run test:e2e",
