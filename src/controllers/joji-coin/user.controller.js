@@ -5,7 +5,8 @@ import JojiUser from '../../models/joji-coin/user.model';
 
 const web3 = new Web3('https://rinkeby.infura.io/v3/82314c9668f843699f03f63e902437ee');
 
-const create = (req, res) => {
+const create = (req, res, next) => {
+  req.body.entropy = 'thisisatestentroypsthssdfdsfdsfdsfthise ssdfds fhdsfoidshofsdfhsdofs';
   const validationResults = validate.createvalidation(req);
   if (validationResults instanceof ValidationError) {
     return res.status(400).json({
@@ -25,7 +26,7 @@ const create = (req, res) => {
     ethAddress: userAccount.address,
   });
 
-  user.save((error, newUser) => {
+  user.save((error) => {
     if (error) {
       return res.status(500).json({
         error: true,
@@ -33,14 +34,7 @@ const create = (req, res) => {
         message: 'Error signing up. Please try again later',
       });
     }
-    return res.status(201).json({
-      error: false,
-      code: '011',
-      message: 'Successfully created a new user',
-      payload: {
-        userId: newUser._id,
-      },
-    });
+    next();
   });
 };
 
