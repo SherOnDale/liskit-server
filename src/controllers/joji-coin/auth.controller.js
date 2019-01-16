@@ -20,7 +20,7 @@ const requireSignin = expressJwt({
 const signin = (req, res) => {
   JojiUser.findOne(
     {
-      email: req.body.email,
+      username: req.body.username,
     },
     (error, user) => {
       if (error || !user) {
