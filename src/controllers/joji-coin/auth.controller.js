@@ -1,7 +1,6 @@
-const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
-
-const JojiUser = require('../../models/joji-coin/user.model');
+import jwt from 'jsonwebtoken';
+import expressJwt from 'express-jwt';
+import JojiUser from '../../models/joji-coin/user.model';
 
 const signout = (req, res) => {
   res.clearCookie('t');
