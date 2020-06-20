@@ -30,7 +30,7 @@
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.1",
     "morgan": "^1.9.1",
-    "web3": "^1.0.0-beta.37"
+    "web3": "^1.2.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
